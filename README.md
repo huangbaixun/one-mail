@@ -4,12 +4,35 @@
 
 一个命令行工具，用于统一管理多个邮箱账户（Gmail、Outlook、网易邮箱）。
 
+## 安装
+
+### 方式 1：通过 ClawHub 安装（推荐）
+
+```bash
+# 安装
+clawhub install one-mail
+
+# 初始化配置
+bash scripts/setup.sh
+```
+
+### 方式 2：手动安装
+
+```bash
+# 克隆仓库
+git clone https://github.com/huangbaixun/one-mail.git
+cd one-mail
+
+# 初始化配置
+bash scripts/setup.sh
+```
+
 ## 快速开始
 
 ### 1. 初始化配置
 
 ```bash
-bash ~/clawd/skills/one-mail/setup.sh
+bash scripts/setup.sh
 ```
 
 按照提示添加你的邮箱账户。
@@ -18,29 +41,29 @@ bash ~/clawd/skills/one-mail/setup.sh
 
 ```bash
 # 收取所有账户的邮件
-bash ~/clawd/skills/one-mail/fetch.sh
+bash scripts/fetch.sh
 
 # 只看未读邮件
-bash ~/clawd/skills/one-mail/fetch.sh --unread
+bash scripts/fetch.sh --unread
 
 # 搜索邮件
-bash ~/clawd/skills/one-mail/fetch.sh --query "AI agent"
+bash scripts/fetch.sh --query "AI agent"
 
 # 指定账户
-bash ~/clawd/skills/one-mail/fetch.sh --account gmail
+bash scripts/fetch.sh --account gmail
 ```
 
 ### 3. 发送邮件
 
 ```bash
 # 使用默认账户发送
-bash ~/clawd/skills/one-mail/send.sh \
+bash scripts/send.sh \
   --to "recipient@example.com" \
   --subject "Hello" \
   --body "Email content"
 
 # 带附件
-bash ~/clawd/skills/one-mail/send.sh \
+bash scripts/send.sh \
   --to "recipient@example.com" \
   --subject "Report" \
   --body "See attachment" \

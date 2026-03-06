@@ -1,13 +1,38 @@
 # one-mail - Unified Email Management Tool
 
+English | [中文](./README.md)
+
 A command-line tool for managing multiple email accounts (Gmail, Outlook, NetEase Mail) from a single interface.
+
+## Installation
+
+### Method 1: Install via ClawHub (Recommended)
+
+```bash
+# Install
+clawhub install one-mail
+
+# Initialize configuration
+bash scripts/setup.sh
+```
+
+### Method 2: Manual Installation
+
+```bash
+# Clone repository
+git clone https://github.com/huangbaixun/one-mail.git
+cd one-mail
+
+# Initialize configuration
+bash scripts/setup.sh
+```
 
 ## Quick Start
 
 ### 1. Initialize Configuration
 
 ```bash
-bash ~/clawd/skills/one-mail/setup.sh
+bash scripts/setup.sh
 ```
 
 Follow the prompts to add your email accounts.
@@ -16,29 +41,29 @@ Follow the prompts to add your email accounts.
 
 ```bash
 # Fetch emails from all accounts
-bash ~/clawd/skills/one-mail/fetch.sh
+bash scripts/fetch.sh
 
 # Unread emails only
-bash ~/clawd/skills/one-mail/fetch.sh --unread
+bash scripts/fetch.sh --unread
 
 # Search emails
-bash ~/clawd/skills/one-mail/fetch.sh --query "AI agent"
+bash scripts/fetch.sh --query "AI agent"
 
 # Specific account
-bash ~/clawd/skills/one-mail/fetch.sh --account gmail
+bash scripts/fetch.sh --account gmail
 ```
 
 ### 3. Send Emails
 
 ```bash
 # Send using default account
-bash ~/clawd/skills/one-mail/send.sh \
+bash scripts/send.sh \
   --to "recipient@example.com" \
   --subject "Hello" \
   --body "Email content"
 
 # With attachment
-bash ~/clawd/skills/one-mail/send.sh \
+bash scripts/send.sh \
   --to "recipient@example.com" \
   --subject "Report" \
   --body "See attachment" \
