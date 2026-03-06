@@ -1,217 +1,205 @@
 ---
 name: one-mail
-description: Unified email management tool for Gmail, Outlook, and NetEase Mail. Manage multiple email accounts from a single CLI interface. Use when you need to manage multiple email accounts, search across accounts, automate email processing, or integrate email into scripts.
+description: 统一邮箱管理工具，支持 Gmail、Outlook 和网易邮箱。从单一 CLI 界面管理多个邮箱账户。适用于：管理多个邮箱账户、跨账户搜索、自动化邮件处理、脚本集成邮件功能。
 ---
 
-# one-mail
+# one-mail | 统一邮箱管理工具
 
-Unified email management tool for Gmail, Outlook, and NetEase Mail.
+统一管理 Gmail、Outlook 和网易邮箱的命令行工具。
 
-## Quick Start
+## 快速开始
 
 ```bash
-# Initialize configuration
+# 初始化配置
 bash scripts/setup.sh
 
-# Fetch emails from all accounts
+# 收取所有账户的邮件
 bash scripts/fetch.sh
 
-# Send email
+# 发送邮件
 bash scripts/send.sh \
   --to "recipient@example.com" \
   --subject "Hello" \
   --body "Email content"
 ```
 
-## Features
+## 功能特性
 
-- **Multi-account management** - Gmail, Outlook, NetEase Mail (163.com)
-- **Unified interface** - Single CLI for all accounts
-- **Cross-account search** - Search emails across all accounts
-- **Attachment support** - Send and receive attachments
-- **JSON output** - Easy integration with scripts
-- **Secure storage** - OAuth 2.0 and encrypted credentials
+- **多账户管理** - Gmail、Outlook、网易邮箱（163.com）
+- **统一界面** - 单一 CLI 管理所有账户
+- **跨账户搜索** - 在所有账户中搜索邮件
+- **附件支持** - 发送和接收附件
+- **JSON 输出** - 易于脚本集成
+- **安全存储** - OAuth 2.0 和加密凭证
 
-## Supported Providers
+## 支持的邮箱提供商
 
 ### Gmail
-- OAuth 2.0 authentication
-- Requires: `gog` CLI (optional)
-- Features: fetch, send, search, attachments
+- OAuth 2.0 认证
+- 需要：`gog` CLI（可选）
+- 功能：收取、发送、搜索、附件
 
 ### Outlook
-- OAuth 2.0 authentication
+- OAuth 2.0 认证
 - Microsoft Graph API
-- Features: fetch, send, search, attachments (< 3MB)
+- 功能：收取、发送、搜索、附件（< 3MB）
 
-### NetEase Mail (163.com)
-- IMAP/SMTP with app password
-- Automatic IMAP ID support
-- Features: fetch, send, search, attachments
+### 网易邮箱（163.com）
+- IMAP/SMTP + 应用密码
+- 自动 IMAP ID 支持
+- 功能：收取、发送、搜索、附件
 
-## Configuration
+## 配置
 
-Configuration files are stored in `~/.onemail/`:
+配置文件存储在 `~/.onemail/`：
 
-- `config.json` - Account settings
-- `credentials.json` - Encrypted credentials (600 permissions)
+- `config.json` - 账户设置
+- `credentials.json` - 加密凭证（600 权限）
 
-## Usage
+## 使用方法
 
-### Fetch Emails
+### 收取邮件
 
 ```bash
-# All accounts
+# 收取所有账户的邮件
 bash scripts/fetch.sh
 
-# Specific account
-bash scripts/fetch.sh --account gmail
-
-# Unread only
+# 只看未读邮件
 bash scripts/fetch.sh --unread
 
-# Search
-bash scripts/fetch.sh --query "urgent"
+# 搜索邮件
+bash scripts/fetch.sh --query "AI agent"
 
-# Limit results
+# 指定账户
+bash scripts/fetch.sh --account gmail
+
+# 限制数量
 bash scripts/fetch.sh --limit 10
 ```
 
-### Send Emails
+### 发送邮件
 
 ```bash
-# Basic send
+# 使用默认账户发送
 bash scripts/send.sh \
   --to "recipient@example.com" \
-  --subject "Subject" \
-  --body "Message"
+  --subject "Hello" \
+  --body "Email content"
 
-# With attachment
+# 指定账户
+bash scripts/send.sh \
+  --account outlook \
+  --to "recipient@example.com" \
+  --subject "Report" \
+  --body "See attachment"
+
+# 带附件
 bash scripts/send.sh \
   --to "recipient@example.com" \
   --subject "Report" \
   --body "See attachment" \
   --attach "/path/to/file.pdf"
-
-# From specific account
-bash scripts/send.sh \
-  --account outlook \
-  --to "recipient@example.com" \
-  --subject "Hello" \
-  --body "Message"
 ```
 
-### Account Management
+### 账户管理
 
 ```bash
-# List accounts
+# 列出所有账户
 bash scripts/accounts.sh list
 
-# Add account
+# 添加账户
 bash scripts/accounts.sh add
 
-# Remove account
-bash scripts/accounts.sh remove --name gmail
+# 删除账户
+bash scripts/accounts.sh remove <account_id>
 
-# Set default
-bash scripts/accounts.sh set-default --name gmail
-
-# Test connection
-bash scripts/accounts.sh test --name gmail
+# 设置默认账户
+bash scripts/accounts.sh set-default <account_id>
 ```
 
-## Output Format
+## 脚本
 
-All emails are output in JSON format:
+所有脚本位于 `scripts/` 目录：
 
-```json
-[
-  {
-    "id": "msg_123",
-    "account": "gmail",
-    "from": "sender@example.com",
-    "to": "you@gmail.com",
-    "subject": "Meeting tomorrow",
-    "date": "2026-03-07T10:30:00Z",
-    "unread": true,
-    "has_attachments": false,
-    "snippet": "Let's meet at 3pm..."
-  }
-]
-```
+- `setup.sh` - 初始化配置
+- `fetch.sh` - 收取邮件
+- `send.sh` - 发送邮件
+- `accounts.sh` - 账户管理
+- `stats.sh` - 统计信息
+- `onemail` - 主入口（符号链接）
 
-## Dependencies
+## 依赖
 
-- `bash` 4.0+
-- `jq` - JSON processing
-- `curl` - HTTP requests
-- `python3` - IMAP/SMTP (NetEase Mail)
-- `gog` - Gmail operations (optional)
+**必需：**
+- `curl` - HTTP 请求
+- `jq` - JSON 处理
+- `python3` - IMAP/SMTP（网易邮箱）
 
-## Documentation
+**可选：**
+- `gog` - Gmail OAuth 2.0（推荐）
 
-- [Quick Start Guide](references/QUICKSTART.md)
-- [Examples](references/EXAMPLES.md)
-- [Test Cases](references/TEST-CASES.md)
-- [IMAP ID Support](references/IMAP-ID.md)
-- [Contributing](references/CONTRIBUTING.md)
+## 安装
 
-## Testing
+### 方式 1：通过 ClawHub 安装（推荐）
 
 ```bash
-# Minimal test (recommended)
-bash scripts/test-minimal.sh
+# 安装
+clawhub install one-mail
 
-# Quick test
-bash scripts/test-quick.sh
-
-# Full test suite
-bash scripts/test-suite.sh
+# 初始化配置
+bash scripts/setup.sh
 ```
 
-## Security
-
-- OAuth 2.0 for Gmail and Outlook
-- App-specific passwords for NetEase Mail
-- Credentials stored with 600 permissions
-- No plaintext passwords in config files
-
-## Troubleshooting
-
-### Gmail Connection Failed
-
-Ensure `gog` CLI is configured:
+### 方式 2：手动安装
 
 ```bash
-gog gmail list --limit 1
+# 克隆仓库
+git clone https://github.com/huangbaixun/one-mail.git
+cd one-mail
+
+# 初始化配置
+bash scripts/setup.sh
 ```
 
-### Outlook Authorization Failed
+## 故障排除
 
-1. Check Client ID and Client Secret
-2. Verify redirect URI: `http://localhost`
-3. Ensure scopes: `Mail.ReadWrite`, `Mail.Send`
+### Gmail 认证失败
+- 确保已安装 `gog` CLI
+- 运行 `gog gmail auth` 重新认证
+- 检查 OAuth 2.0 凭证
 
-### NetEase Mail Connection Failed
+### Outlook 认证失败
+- 检查 Microsoft Graph API 凭证
+- 确认应用权限（Mail.ReadWrite, Mail.Send）
+- 重新运行 `bash scripts/setup.sh`
 
-1. Enable IMAP/SMTP in mail settings
-2. Use app-specific password (not login password)
-3. Check firewall for ports 993/465
-4. Test connection:
+### 网易邮箱连接失败
+- 确认已启用 IMAP/SMTP 服务
+- 使用应用密码（不是登录密码）
+- 检查防火墙设置
 
-```bash
-python3 scripts/test-163-imap.py your@163.com your_app_password
-```
+### 附件发送失败
+- Outlook：文件大小 < 3MB
+- 检查文件路径是否正确
+- 确认文件权限可读
 
-## License
+## 注意事项
 
-MIT License - see [LICENSE](LICENSE)
+- 配置文件包含敏感信息，不要提交到 git
+- 使用 OAuth 2.0 比密码更安全
+- 定期更新凭证和密码
+- 备份配置文件
 
-## Author
+## 许可证
+
+MIT License
+
+## 作者
 
 Huang Baixun ([@huangbaixun](https://github.com/huangbaixun))
 
-## Links
+## 相关链接
 
 - GitHub: https://github.com/huangbaixun/one-mail
-- Issues: https://github.com/huangbaixun/one-mail/issues
+- ClawHub: https://clawhub.com/skills/one-mail
+- OpenClaw: https://openclaw.ai
