@@ -2,7 +2,7 @@
 
 English | [中文](./README.md)
 
-A command-line tool for managing multiple email accounts (Gmail, Outlook, NetEase Mail) from a single interface.
+A command-line tool for managing multiple email accounts (Gmail, Outlook, NetEase Mail 163/126) from a single interface.
 
 ## Installation
 
@@ -86,13 +86,15 @@ bash scripts/send.sh \
 - ✅ Search & filter
 - Requires: Microsoft Graph API
 
-### NetEase Mail (163.com)
+### NetEase Mail (163.com / 126.com)
 - ✅ Fetch emails
 - ✅ Send emails
 - ✅ Attachment support
 - ✅ Search & filter
 - ✅ IMAP ID support (automatic client identification)
 - Requires: Python 3 + imaplib
+- 163 servers: imap.163.com / smtp.163.com
+- 126 servers: imap.126.com / smtp.126.com
 
 ## Configuration Files
 

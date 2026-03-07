@@ -54,9 +54,10 @@ add_account() {
     echo "  1) Gmail"
     echo "  2) Outlook"
     echo "  3) 网易邮箱 (163.com)"
+    echo "  4) 网易邮箱 (126.com)"
     echo ""
     
-    read -p "选择邮箱类型 (1-3): " choice
+    read -p "选择邮箱类型 (1-4): " choice
     
     case $choice in
         1)
@@ -157,6 +158,31 @@ add_account() {
             save_credentials "163" "$email" "$new_creds"
             
             echo "✅ 网易邮箱账户已添加"
+            ;;
+            
+        4)
+            echo ""
+            echo "配置网易 126 邮箱账户"
+            read -p "邮箱地址: " email
+            read -s -p "应用专用密码: " password
+            echo ""
+            
+            CONFIG=$(echo "$CONFIG" | jq --arg email "$email" \
+                '.accounts += [{
+                    "name": "126",
+                    "type": "126",
+                    "email": $email,
+                    "imap_server": "imap.126.com",
+                    "smtp_server": "smtp.126.com",
+                    "default": false
+                }]')
+            
+            echo "$CONFIG" > "$CONFIG_FILE"
+            
+            local new_creds=$(jq -n --arg password "$password" '{"password": $password}')
+            save_credentials "126" "$email" "$new_creds"
+            
+            echo "✅ 网易 126 邮箱账户已添加"
             ;;
             
         *)
@@ -262,7 +288,7 @@ test_account() {
                 exit 1
             fi
             ;;
-        163)
+        163|126)
             echo "⚠️  网易邮箱连接测试暂未实现"
             ;;
         *)

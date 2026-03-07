@@ -51,7 +51,8 @@ fetch_163() {
     
     local email=$(echo "$account" | jq -r '.email')
     local imap_server=$(echo "$account" | jq -r '.imap_server')
-    local creds=$(get_credentials "163" "$email")
+    local account_type=$(echo "$account" | jq -r '.type // "163"')
+    local creds=$(get_credentials "$account_type" "$email")
     local password=$(echo "$creds" | jq -r '.password')
     
     # 使用 Python 脚本处理 IMAP（更可靠）
@@ -209,7 +210,8 @@ send_163() {
     
     local email=$(echo "$account" | jq -r '.email')
     local smtp_server=$(echo "$account" | jq -r '.smtp_server')
-    local creds=$(get_credentials "163" "$email")
+    local account_type=$(echo "$account" | jq -r '.type // "163"')
+    local creds=$(get_credentials "$account_type" "$email")
     local password=$(echo "$creds" | jq -r '.password')
     
     # 使用 Python 脚本发送邮件

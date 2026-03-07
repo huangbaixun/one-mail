@@ -67,7 +67,7 @@ while IFS= read -r account; do
         outlook)
             emails=$(source "$SCRIPT_DIR/lib/outlook.sh" && fetch_outlook "$account" "$UNREAD_ONLY" "$QUERY" "$LIMIT")
             ;;
-        163)
+        163|126)
             emails=$(source "$SCRIPT_DIR/lib/163.sh" && fetch_163 "$account" "$UNREAD_ONLY" "$QUERY" "$LIMIT")
             ;;
         *)

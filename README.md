@@ -2,7 +2,7 @@
 
 [English](./README.en.md) | 中文
 
-一个命令行工具，用于统一管理多个邮箱账户（Gmail、Outlook、网易邮箱）。
+一个命令行工具，用于统一管理多个邮箱账户（Gmail、Outlook、网易邮箱 163/126）。
 
 ## 安装
 
@@ -86,13 +86,15 @@ bash scripts/send.sh \
 - ✅ 搜索过滤
 - 依赖：Microsoft Graph API
 
-### 网易邮箱 (163.com)
+### 网易邮箱 (163.com / 126.com)
 - ✅ 收取邮件
 - ✅ 发送邮件
 - ✅ 附件支持
 - ✅ 搜索过滤
 - ✅ IMAP ID 支持（自动发送客户端标识）
 - 依赖：Python 3 + imaplib
+- 163 服务器：imap.163.com / smtp.163.com
+- 126 服务器：imap.126.com / smtp.126.com
 
 ## 配置文件
 
@@ -203,6 +205,8 @@ gog gmail list --limit 1
 2. 使用应用专用密码，不是登录密码
 3. 检查防火墙是否阻止 993/465 端口
 4. **IMAP ID 问题**：one-mail 已自动发送 IMAP ID 命令，符合网易邮箱要求
+5. 163 使用 imap.163.com / smtp.163.com
+6. 126 使用 imap.126.com / smtp.126.com
 
 **测试网易邮箱连接**：
 ```bash

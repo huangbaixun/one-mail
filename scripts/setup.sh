@@ -37,7 +37,8 @@ cat > "$CREDS_FILE" << 'EOF'
 {
   "gmail": {},
   "outlook": {},
-  "163": {}
+  "163": {},
+  "126": {}
 }
 EOF
 
@@ -53,10 +54,11 @@ echo "支持的邮箱类型:"
 echo "  1) Gmail"
 echo "  2) Outlook"
 echo "  3) 网易邮箱 (163.com)"
+echo "  4) 网易邮箱 (126.com)"
 echo ""
 
 while true; do
-    read -p "选择邮箱类型 (1-3, 或按 Enter 跳过): " choice
+    read -p "选择邮箱类型 (1-4, 或按 Enter 跳过): " choice
     
     if [ -z "$choice" ]; then
         break
@@ -169,6 +171,36 @@ while true; do
             mv "$CREDS_FILE.tmp" "$CREDS_FILE"
             
             echo "✅ 网易邮箱账户已添加"
+            ;;
+            
+        4)
+            echo ""
+            echo "配置网易 126 邮箱账户"
+            read -p "邮箱地址: " email
+            read -s -p "应用专用密码: " password
+            echo ""
+            
+            # 添加到配置
+            jq --arg email "$email" \
+               '.accounts += [{
+                   "name": "126",
+                   "type": "126",
+                   "email": $email,
+                   "imap_server": "imap.126.com",
+                   "smtp_server": "smtp.126.com",
+                   "default": (.accounts | length == 0)
+               }]' "$CONFIG_FILE" > "$CONFIG_FILE.tmp"
+            mv "$CONFIG_FILE.tmp" "$CONFIG_FILE"
+            
+            # 保存凭证
+            jq --arg email "$email" \
+               --arg password "$password" \
+               '.["126"][$email] = {
+                   "password": $password
+               }' "$CREDS_FILE" > "$CREDS_FILE.tmp"
+            mv "$CREDS_FILE.tmp" "$CREDS_FILE"
+            
+            echo "✅ 网易 126 邮箱账户已添加"
             ;;
             
         *)

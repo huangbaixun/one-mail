@@ -186,7 +186,7 @@ case $account_type in
     outlook)
         read_outlook "$MSG_ID" "$QUERY"
         ;;
-    163)
+    163|126)
         read_163 "$MSG_ID"
         ;;
     *)

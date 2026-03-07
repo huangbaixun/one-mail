@@ -110,7 +110,7 @@ case $account_type in
         source "$SCRIPT_DIR/lib/outlook.sh"
         send_outlook "$account" "$TO" "$CC" "$BCC" "$SUBJECT" "$BODY" "$ATTACH" "$REPLY_TO"
         ;;
-    163)
+    163|126)
         source "$SCRIPT_DIR/lib/163.sh"
         send_163 "$account" "$TO" "$CC" "$BCC" "$SUBJECT" "$BODY" "$ATTACH" "$REPLY_TO"
         ;;

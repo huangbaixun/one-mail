@@ -1,11 +1,11 @@
 {
   "name": "one-mail",
-  "version": "1.1.0",
-  "description": "统一邮箱管理工具，支持 Gmail、Outlook 和网易邮箱",
+  "version": "1.2.0",
+  "description": "统一邮箱管理工具，支持 Gmail、Outlook 和网易邮箱（163/126）",
   "author": "Huang Baixun ([@huangbaixun](https://github.com/huangbaixun))",
   "created": "2026-03-07",
   "category": "productivity",
-  "tags": ["email", "gmail", "outlook", "163", "mail", "productivity", "cli", "imap", "smtp"],
+  "tags": ["email", "gmail", "outlook", "163", "126", "netease", "mail", "productivity", "cli", "imap", "smtp"],
   "dependencies": {
     "required": ["bash", "jq", "curl", "python3"],
     "optional": ["gog"]
