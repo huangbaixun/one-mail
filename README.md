@@ -105,19 +105,19 @@ bash scripts/send.sh \
 
 ```bash
 # 列出所有账户
-bash ~/clawd/skills/one-mail/accounts.sh list
+bash scripts/accounts.sh list
 
 # 添加新账户
-bash ~/clawd/skills/one-mail/accounts.sh add
+bash scripts/accounts.sh add
 
 # 删除账户
-bash ~/clawd/skills/one-mail/accounts.sh remove --name outlook
+bash scripts/accounts.sh remove --name outlook
 
 # 设置默认账户
-bash ~/clawd/skills/one-mail/accounts.sh set-default --name gmail
+bash scripts/accounts.sh set-default --name gmail
 
 # 测试账户连接
-bash ~/clawd/skills/one-mail/accounts.sh test --name gmail
+bash scripts/accounts.sh test --name gmail
 ```
 
 ## 高级用法
@@ -128,16 +128,17 @@ bash ~/clawd/skills/one-mail/accounts.sh test --name gmail
 
 ```bash
 # 每小时检查一次未读邮件
-0 * * * * bash ~/clawd/skills/one-mail/fetch.sh --unread | jq -r '.[] | "\(.from): \(.subject)"'
+0 * * * * cd ~/clawd/skills/one-mail && bash scripts/fetch.sh --unread | jq -r '.[] | "\(.from): \(.subject)"'
 ```
 
 ### 自动回复
 
 ```bash
 # 回复最新的紧急邮件
-bash ~/clawd/skills/one-mail/fetch.sh --query "urgent" --limit 1 | \
+cd ~/clawd/skills/one-mail
+bash scripts/fetch.sh --query "urgent" --limit 1 | \
   jq -r '.[0].id' | \
-  xargs -I {} bash ~/clawd/skills/one-mail/send.sh \
+  xargs -I {} bash scripts/send.sh \
     --reply-to {} \
     --body "I'll get back to you soon"
 ```
@@ -146,7 +147,8 @@ bash ~/clawd/skills/one-mail/fetch.sh --query "urgent" --limit 1 | \
 
 ```bash
 # 搜索所有账户中包含 "invoice" 的邮件
-bash ~/clawd/skills/one-mail/fetch.sh --query "invoice" | \
+cd ~/clawd/skills/one-mail
+bash scripts/fetch.sh --query "invoice" | \
   jq -r '.[] | "\(.account) - \(.from): \(.subject)"'
 ```
 
@@ -204,7 +206,7 @@ gog gmail list --limit 1
 
 **测试网易邮箱连接**：
 ```bash
-python3 ~/clawd/skills/one-mail/test-163-imap.py your@163.com your_app_password
+python3 scripts/test-163-imap.py your@163.com your_app_password
 ```
 
 ## 依赖

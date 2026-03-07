@@ -105,19 +105,19 @@ Configuration files are stored in `~/.onemail/`:
 
 ```bash
 # List all accounts
-bash ~/clawd/skills/one-mail/accounts.sh list
+bash scripts/accounts.sh list
 
 # Add new account
-bash ~/clawd/skills/one-mail/accounts.sh add
+bash scripts/accounts.sh add
 
 # Remove account
-bash ~/clawd/skills/one-mail/accounts.sh remove --name outlook
+bash scripts/accounts.sh remove --name outlook
 
 # Set default account
-bash ~/clawd/skills/one-mail/accounts.sh set-default --name gmail
+bash scripts/accounts.sh set-default --name gmail
 
 # Test account connection
-bash ~/clawd/skills/one-mail/accounts.sh test --name gmail
+bash scripts/accounts.sh test --name gmail
 ```
 
 ## Advanced Usage
@@ -128,16 +128,16 @@ Add to crontab:
 
 ```bash
 # Check unread emails every hour
-0 * * * * bash ~/clawd/skills/one-mail/fetch.sh --unread | jq -r '.[] | "\(.from): \(.subject)"'
+0 * * * * bash scripts/fetch.sh --unread | jq -r '.[] | "\(.from): \(.subject)"'
 ```
 
 ### Auto-Reply
 
 ```bash
 # Reply to latest urgent email
-bash ~/clawd/skills/one-mail/fetch.sh --query "urgent" --limit 1 | \
+bash scripts/fetch.sh --query "urgent" --limit 1 | \
   jq -r '.[0].id' | \
-  xargs -I {} bash ~/clawd/skills/one-mail/send.sh \
+  xargs -I {} bash scripts/send.sh \
     --reply-to {} \
     --body "I'll get back to you soon"
 ```
@@ -146,7 +146,7 @@ bash ~/clawd/skills/one-mail/fetch.sh --query "urgent" --limit 1 | \
 
 ```bash
 # Search for "invoice" across all accounts
-bash ~/clawd/skills/one-mail/fetch.sh --query "invoice" | \
+bash scripts/fetch.sh --query "invoice" | \
   jq -r '.[] | "\(.account) - \(.from): \(.subject)"'
 ```
 
@@ -204,7 +204,7 @@ gog gmail list --limit 1
 
 **Test NetEase Mail connection**:
 ```bash
-python3 ~/clawd/skills/one-mail/test-163-imap.py your@163.com your_app_password
+python3 scripts/test-163-imap.py your@163.com your_app_password
 ```
 
 ## Dependencies
@@ -279,12 +279,12 @@ bash send.sh --help
 # daily-digest.sh - Send yourself a daily email summary
 
 TODAY=$(date +%Y-%m-%d)
-EMAILS=$(bash ~/clawd/skills/one-mail/fetch.sh --unread --limit 20)
+EMAILS=$(bash scripts/fetch.sh --unread --limit 20)
 
 COUNT=$(echo "$EMAILS" | jq 'length')
 SUMMARY=$(echo "$EMAILS" | jq -r '.[] | "- \(.from): \(.subject)"')
 
-bash ~/clawd/skills/one-mail/send.sh \
+bash scripts/send.sh \
   --to "yourself@example.com" \
   --subject "Daily Email Digest - $TODAY" \
   --body "You have $COUNT unread emails:
@@ -303,7 +303,7 @@ mkdir -p "$BACKUP_DIR"
 
 for account in gmail outlook 163; do
   echo "Backing up $account..."
-  bash ~/clawd/skills/one-mail/fetch.sh \
+  bash scripts/fetch.sh \
     --account "$account" \
     --limit 1000 \
     > "$BACKUP_DIR/$account-$(date +%Y%m%d).json"
@@ -318,14 +318,14 @@ echo "Backup complete!"
 #!/bin/bash
 # forward-important.sh - Forward important emails to another account
 
-bash ~/clawd/skills/one-mail/fetch.sh --query "urgent OR important" | \
+bash scripts/fetch.sh --query "urgent OR important" | \
   jq -r '.[] | @json' | \
   while IFS= read -r email; do
     SUBJECT=$(echo "$email" | jq -r '.subject')
     FROM=$(echo "$email" | jq -r '.from')
     BODY=$(echo "$email" | jq -r '.snippet')
     
-    bash ~/clawd/skills/one-mail/send.sh \
+    bash scripts/send.sh \
       --to "backup@example.com" \
       --subject "FWD: $SUBJECT" \
       --body "From: $FROM
