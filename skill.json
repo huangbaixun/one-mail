@@ -1,6 +1,6 @@
 {
   "name": "one-mail",
-  "version": "1.0.7",
+  "version": "1.1.0",
   "description": "统一邮箱管理工具，支持 Gmail、Outlook 和网易邮箱",
   "author": "Huang Baixun ([@huangbaixun](https://github.com/huangbaixun))",
   "created": "2026-03-07",
@@ -14,9 +14,9 @@
   "scripts": {
     "setup": "bash scripts/setup.sh",
     "fetch": "bash scripts/fetch.sh",
+    "read": "bash scripts/read.sh",
     "send": "bash scripts/send.sh",
-    "accounts": "bash scripts/accounts.sh",
-    "test": "bash scripts/test-minimal.sh"
+    "accounts": "bash scripts/accounts.sh"
   },
   "license": "MIT",
   "repository": {
